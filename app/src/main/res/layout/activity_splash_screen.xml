@@ -33,13 +33,25 @@
         android:textSize="20sp"
         android:typeface="normal"/>
 
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/location_error_message"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:typeface="normal"
+        android:layout_below="@id/appDesc"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"/>
+
     <Button
         android:id="@+id/retryButton"
-        android:layout_below="@id/appDesc"
+        android:layout_below="@id/errorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="4dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/rounded_button_white_bg"
         android:drawablePadding="8dp"

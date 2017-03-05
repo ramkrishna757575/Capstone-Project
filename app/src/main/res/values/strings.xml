@@ -3,4 +3,14 @@
     <string name="try_again">Try Again</string>
     <string name="khanakhoj">KhanaKhoj</string>
     <string name="app_desc">Lets find some place to eat!!!</string>
+    <string name="search_for_restaurants">search for restaurants</string>
+    <string name="location_error_message">Unable to find location</string>
+    <string name="nothing_to_show">Nothing to show</string>
+    <string name="tab_title_nearby">Nearby</string>
+    <string name="tab_title_bookmarked">Bookmarked</string>
+    <string name="internetErrorTitle">No Internet</string>
+    <string name="internetErrorMsg">Please check network coonectivity and try again</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>
