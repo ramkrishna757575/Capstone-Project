@@ -6,4 +6,7 @@ package com.ram.capstone.capstone_project.misc;
 
 public class AppConstants {
     public static final int PERMISSION_REQUEST_LOCATION = 0;
+    public static final String BASE_URL = "https://developers.zomato.com/api/v2.1/";
+    public static final int PAGE_SIZE = 20;
+    public static final int SEARCH_RADIUS = 1000; //in meters
 }
