@@ -1,6 +1,7 @@
 package com.ram.capstone.capstone_project.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ram.capstone.capstone_project.R;
+import com.ram.capstone.capstone_project.activities.RestaurantDetailActivity;
+import com.ram.capstone.capstone_project.misc.AppConstants;
 import com.ram.capstone.capstone_project.models.Restaurant;
 import com.ram.capstone.capstone_project.models.RestaurantContainer;
 import com.squareup.picasso.Picasso;
@@ -38,7 +41,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        Restaurant restaurant = restaurantContainers.get(position).getRestaurant();
+        final Restaurant restaurant = restaurantContainers.get(position).getRestaurant();
         viewHolder.ratingText.setText(Float.toString(restaurant.getUserRating().getAggregateRating()));
         if(restaurant.getUserRating().getVotes() <= 0)
             viewHolder.ratingText.setVisibility(View.GONE);
@@ -52,6 +55,13 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                     .placeholder(R.drawable.default_restaurant_thumb)
                     .error(R.drawable.default_restaurant_thumb)
                     .into(viewHolder.restaurantThumb);
+
+        viewHolder.restaurantItemContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRestaurantDetailActivity(restaurant);
+            }
+        });
     }
 
     @Override
@@ -84,6 +94,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         private TextView restaurantNameText;
         private TextView localityVerboseText;
         private TextView cuisinesText;
+        private View restaurantItemContainer;
 
         public ViewHolder(View v) {
             super(v);
@@ -92,6 +103,13 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             restaurantNameText = (TextView) v.findViewById(R.id.restaurantName);
             localityVerboseText = (TextView) v.findViewById(R.id.localityVerbose);
             cuisinesText = (TextView) v.findViewById(R.id.cuisines);
+            restaurantItemContainer = v.findViewById(R.id.restaurantItemContainer);
         }
+    }
+
+    private void startRestaurantDetailActivity(Restaurant restaurant) {
+        Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
+        intent.putExtra(AppConstants.RESTAURANT_PARCEL_NAME, restaurant);
+        mContext.startActivity(intent);
     }
 }

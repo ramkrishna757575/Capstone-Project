@@ -1,5 +1,8 @@
 package com.ram.capstone.capstone_project.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 import com.squareup.moshi.Json;
 
@@ -7,7 +10,7 @@ import com.squareup.moshi.Json;
  * Created by ramkrishna on 4/3/17.
  */
 
-public class Restaurant {
+public class Restaurant implements Parcelable {
     @Json(name = "id")
     @SerializedName("id")
     int id;
@@ -160,4 +163,67 @@ public class Restaurant {
     public String getDeeplink() {
         return deeplink;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.url);
+        dest.writeParcelable(this.location, flags);
+        dest.writeInt(this.AvgCostForTwo);
+        dest.writeInt(this.priceRange);
+        dest.writeString(this.currency);
+        dest.writeString(this.thumb);
+        dest.writeString(this.featuredImage);
+        dest.writeString(this.photosUrl);
+        dest.writeString(this.menuUrl);
+        dest.writeString(this.eventUrl);
+        dest.writeParcelable(this.userRating, flags);
+        dest.writeInt(this.hasOnlineDelivery);
+        dest.writeInt(this.isDeliveringNow);
+        dest.writeInt(this.hasTableBooking);
+        dest.writeString(this.cuisines);
+        dest.writeString(this.deeplink);
+    }
+
+    public Restaurant() {
+    }
+
+    protected Restaurant(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.url = in.readString();
+        this.location = in.readParcelable(Location.class.getClassLoader());
+        this.AvgCostForTwo = in.readInt();
+        this.priceRange = in.readInt();
+        this.currency = in.readString();
+        this.thumb = in.readString();
+        this.featuredImage = in.readString();
+        this.photosUrl = in.readString();
+        this.menuUrl = in.readString();
+        this.eventUrl = in.readString();
+        this.userRating = in.readParcelable(UserRating.class.getClassLoader());
+        this.hasOnlineDelivery = in.readInt();
+        this.isDeliveringNow = in.readInt();
+        this.hasTableBooking = in.readInt();
+        this.cuisines = in.readString();
+        this.deeplink = in.readString();
+    }
+
+    public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel source) {
+            return new Restaurant(source);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 }
