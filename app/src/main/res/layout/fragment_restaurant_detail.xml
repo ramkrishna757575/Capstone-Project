@@ -1,8 +1,215 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ram.capstone.capstone_project.fragments.RestaurantDetailFragment"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    tools:context="com.ram.capstone.capstone_project.fragments.RestaurantDetailFragment">
 
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/restaurantImageContainer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/restaurantImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_restaurant_thumb" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:background="@color/colorAccent"
+            android:padding="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="3.7" />
+
+        <Button
+            android:id="@+id/bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_gravity="bottom|start"
+            android:background="@drawable/rounded_button_primary_bg"
+            android:drawableLeft="@drawable/ic_bookmark"
+            android:drawableStart="@drawable/ic_bookmark"
+            android:padding="8dp"
+            android:text="@string/bookmark"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/ratedByCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/restaurantImageContainer"
+        android:padding="2dp"
+        tools:text="11 people rated" />
+
+    <TextView
+        android:id="@+id/restaurantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratedByCount"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        tools:text="Restaurant1" />
+
+    <TextView
+        android:id="@+id/restaurantLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/restaurantName"
+        android:layout_centerInParent="true"
+        android:textSize="18sp"
+        tools:text="Bellandur, Bangalore" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/restaurantInfoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/restaurantLocation"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        app:cardCornerRadius="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/cuisines"
+                android:textSize="16sp"
+                tools:text="CUISINES" />
+
+            <TextView
+                android:id="@+id/cuisines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textColor="@android:color/black"
+                tools:text="Biryani, North Indian" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/average_cost"
+                android:textSize="16sp"
+                tools:text="AVERAGE COST" />
+
+            <TextView
+                android:id="@+id/avgCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textColor="@android:color/black"
+                tools:text="20$ for two (approx.)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/more_info"
+                android:textSize="16sp"
+                tools:text="MORE INFO" />
+
+            <TextView
+                android:id="@+id/onlineDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/online_delivery_available"
+                android:textColor="@android:color/black"
+                tools:text="Online delivery available" />
+
+            <TextView
+                android:id="@+id/tableBooking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/table_booking_available"
+                android:textColor="@android:color/black"
+                tools:text="Table booking available" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/restaurantAddressContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/restaurantInfoContainer"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        app:cardCornerRadius="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/address"
+                android:textSize="16sp"
+                tools:text="ADDRESS" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textColor="@android:color/black"
+                tools:text="268/3, 1st floor, BVNR Complex, Hosur Main Road, Bommanahalli, Bangalore" />
+
+            <TextView
+                android:id="@+id/showInMaps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/show_in_maps"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                tools:text="Show in maps" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/somethingWentWrong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/something_went_wrong"
+        android:textSize="22sp"
+        android:visibility="gone" />
+
+</RelativeLayout>
