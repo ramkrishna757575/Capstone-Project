@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.ram.capstone.capstone_project.BuildConfig;
 import com.ram.capstone.capstone_project.R;
 import com.ram.capstone.capstone_project.adapters.RestaurantListAdapter;
@@ -50,6 +52,7 @@ public class RestaurantListFragment extends Fragment {
     private ProgressBar loadingIndicator;
     private TextView somethingWentWrong;
     private ImageView clearSearchText;
+    private AdView mAdView;
 
     private RestaurantListAdapter restaurantListAdapter;
     private GridLayoutManager gridLayoutManager;
@@ -86,6 +89,9 @@ public class RestaurantListFragment extends Fragment {
         restaurantsGrid.setLayoutManager(gridLayoutManager);
         restaurantsGrid.setAdapter(restaurantListAdapter);
         clearSearchText = (ImageView) rootView.findViewById(R.id.clearSearchText);
+        mAdView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private void setupInitialStateOfViews() {
