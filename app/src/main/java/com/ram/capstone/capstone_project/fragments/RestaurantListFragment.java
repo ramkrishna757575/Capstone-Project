@@ -175,6 +175,7 @@ public class RestaurantListFragment extends Fragment {
             CommonUtils.showDialogToConnectInternet(getContext(), true, false);
             CommonUtils.showViews(btnRetry);
             CommonUtils.hideViews(loadingIndicator);
+            isFetching = false;
             return;
         } else {
             CommonUtils.showViews(loadingIndicator);
@@ -199,13 +200,13 @@ public class RestaurantListFragment extends Fragment {
                     searchStartPosition += resultsShownCount;
                     CommonUtils.hideViews(loadingIndicator);
                     restaurantListAdapter.addAll(response.body().getRestaurantsContainer());
-                    isFetching = false;
                     if (restaurantListAdapter.getItemCount() <= 0) {
                         somethingWentWrong.setText(getResources().getString(R.string.nothing_to_show));
                         CommonUtils.showViews(somethingWentWrong);
                     } else {
                         CommonUtils.hideViews(somethingWentWrong);
                     }
+                    isFetching = false;
                 } else {
                     CommonUtils.hideViews(loadingIndicator);
                     CommonUtils.showViews(somethingWentWrong, btnRetry);
@@ -223,7 +224,7 @@ public class RestaurantListFragment extends Fragment {
     }
 
     private void resetSearchAndFetch(int clearSearchTextButtonVisibility) {
-        if (isFetching)
+        if (isFetching && call != null)
             call.cancel();
         restaurantListAdapter.clearAll();
         searchStartPosition = 0;

@@ -226,4 +226,77 @@ public class Restaurant implements Parcelable {
             return new Restaurant[size];
         }
     };
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setAvgCostForTwo(int avgCostForTwo) {
+        AvgCostForTwo = avgCostForTwo;
+    }
+
+    public void setPriceRange(int priceRange) {
+        this.priceRange = priceRange;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
+    }
+
+    public void setFeaturedImage(String featuredImage) {
+        this.featuredImage = featuredImage;
+    }
+
+    public void setPhotosUrl(String photosUrl) {
+        this.photosUrl = photosUrl;
+    }
+
+    public void setMenuUrl(String menuUrl) {
+        this.menuUrl = menuUrl;
+    }
+
+    public void setEventUrl(String eventUrl) {
+        this.eventUrl = eventUrl;
+    }
+
+    public void setUserRating(UserRating userRating) {
+        this.userRating = userRating;
+    }
+
+    public void setHasOnlineDelivery(int hasOnlineDelivery) {
+        this.hasOnlineDelivery = hasOnlineDelivery;
+    }
+
+    public void setIsDeliveringNow(int isDeliveringNow) {
+        this.isDeliveringNow = isDeliveringNow;
+    }
+
+    public void setHasTableBooking(int hasTableBooking) {
+        this.hasTableBooking = hasTableBooking;
+    }
+
+    public void setCuisines(String cuisines) {
+        this.cuisines = cuisines;
+    }
+
+    public void setDeeplink(String deeplink) {
+        this.deeplink = deeplink;
+    }
 }

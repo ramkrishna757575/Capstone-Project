@@ -26,6 +26,10 @@
             android:name=".activities.RestaurantListActivity"
             android:label="@string/khanakhoj" />
         <activity android:name=".activities.RestaurantDetailActivity"></activity>
+        <provider
+            android:name=".database.RestaurantProvider"
+            android:authorities="@string/content_authority"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>

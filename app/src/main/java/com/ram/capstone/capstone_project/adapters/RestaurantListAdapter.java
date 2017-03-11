@@ -43,8 +43,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         final Restaurant restaurant = restaurantContainers.get(position).getRestaurant();
         viewHolder.ratingText.setText(Float.toString(restaurant.getUserRating().getAggregateRating()));
-        if(restaurant.getUserRating().getVotes() <= 0)
-            viewHolder.ratingText.setVisibility(View.GONE);
         viewHolder.restaurantNameText.setText(restaurant.getName());
         viewHolder.localityVerboseText.setText(restaurant.getLocation().getLocalityVerbose());
         viewHolder.cuisinesText.setText(restaurant.getCuisines());
