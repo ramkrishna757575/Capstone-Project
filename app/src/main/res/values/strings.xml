@@ -28,4 +28,6 @@
     <string name="table_booking_not_available">Table booking not available</string>
     <string name="address">ADDRESS</string>
     <string name="show_in_maps">Show in maps</string>
+
+    <string name="content_authority">com.ram.capstone.capstone_project</string>
 </resources>

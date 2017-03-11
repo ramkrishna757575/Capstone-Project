@@ -16,6 +16,7 @@ import com.ram.capstone.capstone_project.R;
 import com.ram.capstone.capstone_project.misc.AppConstants;
 import com.ram.capstone.capstone_project.models.Restaurant;
 import com.ram.capstone.capstone_project.utils.CommonUtils;
+import com.ram.capstone.capstone_project.utils.DatabaseUtils;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -80,6 +81,11 @@ public class RestaurantDetailFragment extends Fragment {
                     .placeholder(R.drawable.default_restaurant_thumb)
                     .error(R.drawable.default_restaurant_thumb)
                     .into(restaurantImage);
+        if(DatabaseUtils.isRestaurantBookmarked(getContext(), restaurant.getId())) {
+            btnBookmark.setText(getString(R.string.bookmarked));
+        } else {
+            btnBookmark.setText(getString(R.string.bookmark));
+        }
     }
 
     private void setupListeners() {
@@ -92,7 +98,13 @@ public class RestaurantDetailFragment extends Fragment {
         btnBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(DatabaseUtils.isRestaurantBookmarked(getContext(), restaurant.getId())) {
+                    DatabaseUtils.deleteRestaurantFromDb(getContext(), restaurant.getId());
+                    btnBookmark.setText(getString(R.string.bookmark));
+                } else {
+                    DatabaseUtils.insertRestaurantInDb(getContext(), restaurant);
+                    btnBookmark.setText(getString(R.string.bookmarked));
+                }
             }
         });
     }

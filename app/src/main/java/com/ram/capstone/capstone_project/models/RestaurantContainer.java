@@ -12,6 +12,12 @@ public class RestaurantContainer {
     @SerializedName("restaurant")
     Restaurant restaurant;
 
+    public RestaurantContainer(){};
+
+    public RestaurantContainer(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
     public Restaurant getRestaurant() {
         return restaurant;
     }
