@@ -84,6 +84,8 @@ public class DatabaseUtils {
         contentValues.put(RestaurantContract.RestaurantEntry.COLUMN_AVG_COST, restaurant.getAvgCostForTwo());
         contentValues.put(RestaurantContract.RestaurantEntry.COLUMN_ONLINE_DELIVERY, restaurant.isHasOnlineDelivery());
         contentValues.put(RestaurantContract.RestaurantEntry.COLUMN_TABLE_BOOKING, restaurant.isHasTableBooking());
+        contentValues.put(RestaurantContract.RestaurantEntry.COLUMN_FEATURED_IMAGE, restaurant.getFeaturedImage());
+        contentValues.put(RestaurantContract.RestaurantEntry.COLUMN_CURRENCY, restaurant.getCurrency());
         return contentValues;
     }
 

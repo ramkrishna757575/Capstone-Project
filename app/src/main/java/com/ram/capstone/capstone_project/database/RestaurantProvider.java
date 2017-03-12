@@ -26,14 +26,13 @@ public class RestaurantProvider extends ContentProvider {
     public static final int LOCATION_WITH_RESTAURANT_ID = 200;
     public static final int USER_RATINGS = 301;
     public static final int USER_RATING_WITH_RESTAURANT_ID = 300;
+    public static final int JOINED_RESTAURANTS_DETAILS= 400;
+    public static final int JOINED_RESTAURANTS_DETAILS_WITH_ID = 401;
 
     private static final SQLiteQueryBuilder sRestaurantsQueryBuilder = new SQLiteQueryBuilder();
 
-    //restaurant details selection
     public static final String sRestaurantSelection = RestaurantContract.RestaurantEntry.TABLE_NAME + "." + RestaurantContract.RestaurantEntry.COLUMN_ID+ "=?";
-    //reviews selection
     public static final String sLocationSelection = RestaurantContract.LocationEntry.TABLE_NAME + "." + RestaurantContract.LocationEntry.COLUMN_RESTAURANT_ID+ "=?";
-    //trailers selection
     public static final String sUserRatingSelection = RestaurantContract.UserRatingEntry.TABLE_NAME + "." + RestaurantContract.UserRatingEntry.COLUMN_RESTAURANT_ID+ "=?";
 
     public static UriMatcher buildUriMatcher() {
@@ -47,6 +46,8 @@ public class RestaurantProvider extends ContentProvider {
         matcher.addURI(authority, RestaurantContract.PATH_LOCATION + "/#", LOCATION_WITH_RESTAURANT_ID);
         matcher.addURI(authority, RestaurantContract.PATH_USER_RATING, USER_RATINGS);
         matcher.addURI(authority, RestaurantContract.PATH_USER_RATING + "/#", USER_RATING_WITH_RESTAURANT_ID);
+        matcher.addURI(authority, RestaurantContract.PATH_RESTAURANT + "/details", JOINED_RESTAURANTS_DETAILS);
+        matcher.addURI(authority, RestaurantContract.PATH_RESTAURANT + "/details/#", JOINED_RESTAURANTS_DETAILS_WITH_ID);
 
         return matcher;
     }
@@ -137,10 +138,30 @@ public class RestaurantProvider extends ContentProvider {
                 );
                 break;
             }
+            case JOINED_RESTAURANTS_DETAILS: {
+                retCursor = restaurantDbHelper.getReadableDatabase().rawQuery(
+                        "SELECT * FROM restaurants r " +
+                                "INNER JOIN locations l ON l.restaurant_id = r.id " +
+                                "INNER JOIN user_ratings ur ON ur.restaurant_id = r.id",
+                        null
+                );
+                break;
+            }
+            case JOINED_RESTAURANTS_DETAILS_WITH_ID: {
+                selectionArgs = new String[]{uri.getPathSegments().get(1)};
+                retCursor = restaurantDbHelper.getReadableDatabase().rawQuery(
+                        "SELECT * FROM restaurants r " +
+                                "INNER JOIN locations l ON l.restaurant_id = r.id " +
+                                "INNER JOIN user_ratings ur ON ur.restaurant_id = r.id " +
+                                "WHERE r.id = ?",
+                        selectionArgs
+                );
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Unknown uri " + uri);
         }
-        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        retCursor.setNotificationUri(getContext().getContentResolver(), RestaurantContract.BASE_CONTENT_URI);
         return retCursor;
     }
 
@@ -202,7 +223,7 @@ public class RestaurantProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        getContext().getContentResolver().notifyChange(uri, null);
+        getContext().getContentResolver().notifyChange(RestaurantContract.BASE_CONTENT_URI, null);
         return returnUri;
     }
 
@@ -236,7 +257,7 @@ public class RestaurantProvider extends ContentProvider {
         }
         // Because a null deletes all rows
         if (rowsDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            getContext().getContentResolver().notifyChange(RestaurantContract.BASE_CONTENT_URI, null);
         }
         return rowsDeleted;
     }
@@ -260,7 +281,7 @@ public class RestaurantProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
         if (rowsUpdated != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            getContext().getContentResolver().notifyChange(RestaurantContract.BASE_CONTENT_URI, null);
         }
         return rowsUpdated;
     }

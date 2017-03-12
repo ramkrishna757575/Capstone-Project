@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.ram.capstone.capstone_project.R;
 import com.ram.capstone.capstone_project.adapters.TabAdapter;
+import com.ram.capstone.capstone_project.fragments.BookmarkedRestaurantListFragment;
 import com.ram.capstone.capstone_project.fragments.RestaurantListFragment;
 
 public class RestaurantListActivity extends AppCompatActivity {
@@ -41,7 +42,7 @@ public class RestaurantListActivity extends AppCompatActivity {
     private void setupTabs() {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new RestaurantListFragment(), getString(R.string.tab_title_nearby));
-//        adapter.addFragment(new RestaurantDetailFragment(), getString(R.string.tab_title_bookmarked));
+        adapter.addFragment(new BookmarkedRestaurantListFragment(), getString(R.string.tab_title_bookmarked));
         viewPager.setAdapter(adapter);
         tabLayout.post(new Runnable() {
             @Override

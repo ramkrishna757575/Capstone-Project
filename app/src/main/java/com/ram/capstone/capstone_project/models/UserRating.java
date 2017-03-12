@@ -35,6 +35,18 @@ public class UserRating implements Parcelable {
         return votes;
     }
 
+    public void setAggregateRating(float aggregateRating) {
+        this.aggregateRating = aggregateRating;
+    }
+
+    public void setRatingText(String ratingText) {
+        this.ratingText = ratingText;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
+    }
+
     @Override
     public int describeContents() {
         return 0;

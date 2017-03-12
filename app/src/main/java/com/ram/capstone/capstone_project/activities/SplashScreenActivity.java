@@ -29,13 +29,15 @@ public class SplashScreenActivity extends AppCompatActivity implements GoogleApi
     Button btnRetry;
     TextView errorMessage;
 
-    private static int SPLASH_TIME_OUT = 3000;
     private boolean splashTimedOut = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        if(CommonUtils.getStringFromSharedPreference(this, SharedPref.FIRST_LAUNCH).isEmpty()) {
+            CommonUtils.getSharedPreferenceEditor(this).putString(SharedPref.FIRST_LAUNCH, "Yes").apply();
+        }
         getLocationService();
 
         errorMessage = (TextView) findViewById(R.id.errorMessage);
@@ -51,6 +53,7 @@ public class SplashScreenActivity extends AppCompatActivity implements GoogleApi
             }
         });
 
+        int SPLASH_TIME_OUT = 3000;
         new Handler().postDelayed(new Runnable() {
             /*
              * Showing splash screen with a timer.
@@ -62,6 +65,7 @@ public class SplashScreenActivity extends AppCompatActivity implements GoogleApi
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 if (location != null) {
+                    CommonUtils.getSharedPreferenceEditor(SplashScreenActivity.this).putString(SharedPref.FIRST_LAUNCH, "No").apply();
                     Intent i = new Intent(SplashScreenActivity.this, RestaurantListActivity.class);
                     startActivity(i);
                     // close this activity
@@ -118,10 +122,10 @@ public class SplashScreenActivity extends AppCompatActivity implements GoogleApi
             case AppConstants.PERMISSION_REQUEST_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     getLocation();
+                    saveLocationInSharedPrefs();
                 } else {
                     finish();
                 }
-                return;
             }
         }
     }
@@ -142,11 +146,12 @@ public class SplashScreenActivity extends AppCompatActivity implements GoogleApi
             CommonUtils.getSharedPreferenceEditor(this).putString(SharedPref.LOCATION_LON, Double.toString(location.getLongitude())).apply();
 
             if (splashTimedOut) {
+                CommonUtils.getSharedPreferenceEditor(this).putString(SharedPref.FIRST_LAUNCH, "No").apply();
                 Intent intent = new Intent(this, RestaurantListActivity.class);
                 startActivity(intent);
                 finish();
             }
-        } else {
+        } else if(!CommonUtils.getStringFromSharedPreference(this, SharedPref.FIRST_LAUNCH).equals("Yes")){
             btnRetry.setVisibility(View.VISIBLE);
             errorMessage.setVisibility(View.VISIBLE);
         }
