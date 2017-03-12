@@ -77,7 +77,7 @@ public class RestaurantDetailFragment extends Fragment {
         if (restaurant.getFeaturedImage() == null || restaurant.getFeaturedImage().isEmpty())
             restaurantImage.setImageDrawable(getResources().getDrawable(R.drawable.default_restaurant_thumb));
         else
-            Picasso.with(getContext()).load(restaurant.getThumb())
+            Picasso.with(getContext()).load(restaurant.getFeaturedImage())
                     .placeholder(R.drawable.default_restaurant_thumb)
                     .error(R.drawable.default_restaurant_thumb)
                     .into(restaurantImage);

@@ -58,7 +58,7 @@ public class RestaurantDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_USER_RATING_TABLE = "CREATE TABLE " + RestaurantContract.UserRatingEntry.TABLE_NAME + " (" +
                 RestaurantContract.UserRatingEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 RestaurantContract.UserRatingEntry.COLUMN_RESTAURANT_ID + " INTEGER NOT NULL, " +
-                RestaurantContract.UserRatingEntry.COLUMN_AGGREGATE_RATING + " INTEGER, " +
+                RestaurantContract.UserRatingEntry.COLUMN_AGGREGATE_RATING + " REAL, " +
                 RestaurantContract.UserRatingEntry.COLUMN_RATING_TEXT + " TEXT, " +
                 RestaurantContract.UserRatingEntry.COLUMN_VOTES + " INTEGER, " +
                 " FOREIGN KEY (" + RestaurantContract.UserRatingEntry.COLUMN_RESTAURANT_ID + ") REFERENCES " +
