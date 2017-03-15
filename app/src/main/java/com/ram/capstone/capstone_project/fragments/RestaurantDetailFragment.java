@@ -1,10 +1,14 @@
 package com.ram.capstone.capstone_project.fragments;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +18,7 @@ import android.widget.TextView;
 
 import com.ram.capstone.capstone_project.R;
 import com.ram.capstone.capstone_project.misc.AppConstants;
+import com.ram.capstone.capstone_project.misc.SharedPref;
 import com.ram.capstone.capstone_project.models.Restaurant;
 import com.ram.capstone.capstone_project.utils.CommonUtils;
 import com.ram.capstone.capstone_project.utils.DatabaseUtils;
@@ -23,11 +28,12 @@ import com.squareup.picasso.Picasso;
  * A simple {@link Fragment} subclass.
  */
 public class RestaurantDetailFragment extends Fragment {
-    private View rootView;
     private Restaurant restaurant;
-    private TextView name, location, rating, ratedByCount, cuisines, avgCost, onlineDelivery, tableBooking, address, showInMaps;
+    private View rootView, restaurantImageContainer, restaurantInfoContainer, restaurantAddressContainer;
+    private TextView name, location, rating, ratedByCount, cuisines, avgCost, onlineDelivery, tableBooking, address, showInMaps, somethingWentWrong;
     private Button btnBookmark;
     private ImageView restaurantImage;
+    private boolean noData;
 
     public RestaurantDetailFragment() {
         // Required empty public constructor
@@ -41,22 +47,48 @@ public class RestaurantDetailFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_restaurant_detail, container, false);
 
         Bundle bundle = getArguments();
-        if(bundle == null)
-            getActivity().finish();
-        restaurant = bundle.getParcelable(AppConstants.RESTAURANT_PARCEL_NAME);
-        if(restaurant == null)
-            getActivity().finish();
-
+        if (bundle == null) {
+            noData = true;
+        } else {
+            restaurant = bundle.getParcelable(AppConstants.RESTAURANT_PARCEL_NAME);
+            if (restaurant == null)
+                noData = true;
+        }
         init();
         setupData();
         setupListeners();
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        if (CommonUtils.getBooleanFromSharedPreference(getContext(), SharedPref.TWO_PANE_MODE))
+            LocalBroadcastManager.getInstance(getContext()).registerReceiver(mMessageReceiver, new IntentFilter(AppConstants.RESTAURANT_DETAIL_FRAGMENT_TAG));
+
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        if (CommonUtils.getBooleanFromSharedPreference(getContext(), SharedPref.TWO_PANE_MODE)) {
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mMessageReceiver);
+        }
+        super.onPause();
+    }
+
     private void setupData() {
+        if (noData) {
+            CommonUtils.showViews(somethingWentWrong);
+            CommonUtils.hideViews(restaurantImageContainer, restaurantInfoContainer, restaurantAddressContainer, ratedByCount, name, location);
+            somethingWentWrong.setText(getString(R.string.nothing_to_show));
+            return;
+        } else {
+            CommonUtils.hideViews(somethingWentWrong);
+            CommonUtils.showViews(restaurantImageContainer, restaurantInfoContainer, restaurantAddressContainer, ratedByCount, name, location);
+        }
         name.setText(restaurant.getName());
         location.setText(restaurant.getLocation().getLocalityVerbose());
-        if(restaurant.getUserRating().getVotes() > 0) {
+        if (restaurant.getUserRating().getVotes() > 0) {
             rating.setText(Float.toString(restaurant.getUserRating().getAggregateRating()));
             ratedByCount.setText(getString(R.string.people_voted, restaurant.getUserRating().getVotes()));
         } else {
@@ -64,12 +96,12 @@ public class RestaurantDetailFragment extends Fragment {
         }
         cuisines.setText(restaurant.getCuisines());
         avgCost.setText(getString(R.string.average_cost_for_two, restaurant.getCurrency(), restaurant.getAvgCostForTwo()));
-        if(restaurant.isHasOnlineDelivery())
+        if (restaurant.isHasOnlineDelivery())
             onlineDelivery.setText(getString(R.string.online_delivery_available));
         else
             onlineDelivery.setText(getString(R.string.online_delivery_not_available));
 
-        if(restaurant.isHasTableBooking())
+        if (restaurant.isHasTableBooking())
             tableBooking.setText(getString(R.string.table_booking_available));
         else
             tableBooking.setText(getString(R.string.table_booking_not_available));
@@ -81,7 +113,7 @@ public class RestaurantDetailFragment extends Fragment {
                     .placeholder(R.drawable.default_restaurant_thumb)
                     .error(R.drawable.default_restaurant_thumb)
                     .into(restaurantImage);
-        if(DatabaseUtils.isRestaurantBookmarked(getContext(), restaurant.getId())) {
+        if (DatabaseUtils.isRestaurantBookmarked(getContext(), restaurant.getId())) {
             btnBookmark.setText(getString(R.string.bookmarked));
         } else {
             btnBookmark.setText(getString(R.string.bookmark));
@@ -89,6 +121,8 @@ public class RestaurantDetailFragment extends Fragment {
     }
 
     private void setupListeners() {
+        if (noData)
+            return;
         showInMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +132,7 @@ public class RestaurantDetailFragment extends Fragment {
         btnBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(DatabaseUtils.isRestaurantBookmarked(getContext(), restaurant.getId())) {
+                if (DatabaseUtils.isRestaurantBookmarked(getContext(), restaurant.getId())) {
                     DatabaseUtils.deleteRestaurantFromDb(getContext(), restaurant.getId());
                     btnBookmark.setText(getString(R.string.bookmark));
                 } else {
@@ -122,6 +156,10 @@ public class RestaurantDetailFragment extends Fragment {
         showInMaps = (TextView) rootView.findViewById(R.id.showInMaps);
         btnBookmark = (Button) rootView.findViewById(R.id.bookmark);
         restaurantImage = (ImageView) rootView.findViewById(R.id.restaurantImage);
+        somethingWentWrong = (TextView) rootView.findViewById(R.id.somethingWentWrong);
+        restaurantImageContainer = rootView.findViewById(R.id.restaurantImageContainer);
+        restaurantInfoContainer = rootView.findViewById(R.id.restaurantInfoContainer);
+        restaurantAddressContainer = rootView.findViewById(R.id.restaurantAddressContainer);
     }
 
     private void openRestaurantInMaps() {
@@ -136,4 +174,14 @@ public class RestaurantDetailFragment extends Fragment {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            restaurant = intent.getExtras().getParcelable(AppConstants.RESTAURANT_PARCEL_NAME);
+            noData = restaurant == null;
+            setupData();
+            setupListeners();
+        }
+    };
 }

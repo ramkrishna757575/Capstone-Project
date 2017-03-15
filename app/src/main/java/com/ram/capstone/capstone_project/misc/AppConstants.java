@@ -11,4 +11,7 @@ public class AppConstants {
     public static final int SEARCH_RADIUS = 1000; //in meters
     public static final String RESTAURANT_PARCEL_NAME = "RESTAURANT";
     public static final String RESTAURANT_DETAIL_FRAGMENT_TAG = "RESTAURANT_DETAIL_FRAGMENT_TAG";
+
+    public static final int RESTAURANT_LIST_TAB_INDEX = 0;
+    public static final int BOOKMARKED_RESTAURANT_LIST_TAB_INDEX = 1;
 }

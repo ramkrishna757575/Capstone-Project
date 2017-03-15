@@ -19,6 +19,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.ram.capstone.capstone_project.BuildConfig;
 import com.ram.capstone.capstone_project.R;
+import com.ram.capstone.capstone_project.activities.RestaurantListActivity;
 import com.ram.capstone.capstone_project.adapters.RestaurantListAdapter;
 import com.ram.capstone.capstone_project.api.RestClient;
 import com.ram.capstone.capstone_project.api.ServerResponseCode;
@@ -221,6 +222,20 @@ public class RestaurantListFragment extends Fragment {
                 isFetching = false;
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        if(getContext() instanceof RestaurantListActivity && restaurantListAdapter != null && CommonUtils.getBooleanFromSharedPreference(getContext(), SharedPref.TWO_PANE_MODE))
+            ((RestaurantListActivity) getContext()).setOnTabChangeListener(restaurantListAdapter);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        if(getContext() instanceof RestaurantListActivity && restaurantListAdapter != null && CommonUtils.getBooleanFromSharedPreference(getContext(), SharedPref.TWO_PANE_MODE))
+            ((RestaurantListActivity) getContext()).removeOnTabChangeListener(restaurantListAdapter);
+        super.onPause();
     }
 
     private void resetSearchAndFetch(int clearSearchTextButtonVisibility) {

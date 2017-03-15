@@ -10,4 +10,5 @@ public class SharedPref {
     public static final String LOCATION_LAT = "Latitude";
     public static final String LOCATION_LON = "Longitude";
     public static final String FIRST_LAUNCH = "FirstLaunch";
+    public static final String TWO_PANE_MODE = "TwoPaneMode";
 }
