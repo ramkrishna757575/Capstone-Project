@@ -20,8 +20,10 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.ram.capstone.capstone_project.R;
+import com.ram.capstone.capstone_project.activities.RestaurantListActivity;
 import com.ram.capstone.capstone_project.adapters.RestaurantListCursorAdapter;
 import com.ram.capstone.capstone_project.database.RestaurantContract;
+import com.ram.capstone.capstone_project.misc.SharedPref;
 import com.ram.capstone.capstone_project.utils.CommonUtils;
 
 /**
@@ -110,5 +112,19 @@ public class BookmarkedRestaurantListFragment extends Fragment implements Loader
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         restaurantListCursorAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onResume() {
+        if(getContext() instanceof RestaurantListActivity && restaurantListCursorAdapter != null && CommonUtils.getBooleanFromSharedPreference(getContext(), SharedPref.TWO_PANE_MODE))
+            ((RestaurantListActivity) getContext()).setOnTabChangeListener(restaurantListCursorAdapter);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        if(getContext() instanceof RestaurantListActivity && restaurantListCursorAdapter != null && CommonUtils.getBooleanFromSharedPreference(getContext(), SharedPref.TWO_PANE_MODE))
+            ((RestaurantListActivity) getContext()).removeOnTabChangeListener(restaurantListCursorAdapter);
+        super.onPause();
     }
 }

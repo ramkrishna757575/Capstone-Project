@@ -39,6 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity implements GoogleApi
             CommonUtils.getSharedPreferenceEditor(this).putString(SharedPref.FIRST_LAUNCH, "Yes").apply();
         }
         getLocationService();
+        saveLocationInSharedPrefs();
 
         errorMessage = (TextView) findViewById(R.id.errorMessage);
         btnRetry = (Button) findViewById(R.id.retryButton);
