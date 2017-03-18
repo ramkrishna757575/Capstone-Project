@@ -31,6 +31,13 @@
 
     <string name="content_authority">com.ram.capstone.capstone_project</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="no_restaurants_bookmarked">No restaurants bookmarked</string>
+    <string name="desc_app_toolbar_khanakhoj">App toolbar - Khanakhoj</string>
+    <string name="desc_restaurant_thumb">Restaurant thumb</string>
+    <string name="desc_ads_by_google">Ads by google</string>
+    <string name="desc_restaurant_featured_image">Restaurant featured Image</string>
+    <string name="desc_search_icon">Search icon</string>
+    <string name="desc_clear_search">Clear search</string>
 </resources>
