@@ -6,6 +6,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 /**
  * Created by ramkrishna on 4/3/17.
+ * RestAdapter required by Retrofit
  */
 
 public class RestClient {

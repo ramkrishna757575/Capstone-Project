@@ -26,6 +26,7 @@ import java.util.List;
 
 /**
  * Created by ramkrishna on 5/3/17.
+ * Adapter for the restaurant list fetched from Zomato Api
  */
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.ViewHolder> implements INotifyTabChange{
@@ -81,7 +82,11 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     public int getItemCount() {
         return restaurantContainers.size();
     }
-
+    
+    /**
+     * Add more @{@link Restaurant} to the list
+     * @param moreRestaurantContainers
+     */
     public void addAll(List<RestaurantContainer> moreRestaurantContainers) {
         if (restaurantContainers != null) {
             if(restaurantContainers.size() <= 0 && CommonUtils.getBooleanFromSharedPreference(mContext, SharedPref.TWO_PANE_MODE))
@@ -90,7 +95,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             notifyDataSetChanged();
         }
     }
-
+    
+    /**
+     * remove all @{@link Restaurant} from the list
+     */
     public void clearAll() {
         if(restaurantContainers != null) {
             restaurantContainers.clear();
@@ -99,7 +107,12 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         if(CommonUtils.getBooleanFromSharedPreference(mContext, SharedPref.TWO_PANE_MODE))
             updateRestaurantDetail(null);
     }
-
+    
+    /**
+     * if twoPaneMode and tab changed, then update @{@link com.ram.capstone.capstone_project.fragments.RestaurantDetailFragment}
+     * with corresponding selected restaurant from the new tab selected
+     * @param tabIndex
+     */
     @Override
     public void tabChanged(int tabIndex) {
         if(tabIndex != AppConstants.RESTAURANT_LIST_TAB_INDEX)
@@ -143,7 +156,11 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             mContext.startActivity(intent);
         }
     }
-
+    
+    /**
+     * if twoPaneMode, then change the background of the item that is selected
+     * @param viewHolder
+     */
     private void setSelected(ViewHolder viewHolder) {
         if(!CommonUtils.getBooleanFromSharedPreference(mContext, SharedPref.TWO_PANE_MODE))
             return;

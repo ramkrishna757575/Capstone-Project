@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,8 @@ import com.ram.capstone.capstone_project.utils.CommonUtils;
 import com.ram.capstone.capstone_project.utils.DatabaseUtils;
 import com.ram.capstone.capstone_project.widget.RestaurantWidget;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -174,7 +177,12 @@ public class RestaurantDetailFragment extends Fragment {
         String uriString = uriBegin + "?q=" + encodedQuery + "&z=18";
         Uri uri = Uri.parse(uriString);
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW, uri);
-        startActivity(intent);
+        PackageManager packageManager = getContext().getPackageManager();
+        List activities = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        if(activities.size() > 0)
+            startActivity(intent);
+        else
+            CommonUtils.showDialogWithMessage(getContext(), getString(R.string.no_app_for_map));
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {

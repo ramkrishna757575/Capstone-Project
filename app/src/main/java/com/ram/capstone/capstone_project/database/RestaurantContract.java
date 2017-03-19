@@ -7,6 +7,7 @@ import android.provider.BaseColumns;
 
 /**
  * Created by ramkrishna on 11/3/17.
+ * Contract for @{@link RestaurantProvider}
  */
 
 public class RestaurantContract {
