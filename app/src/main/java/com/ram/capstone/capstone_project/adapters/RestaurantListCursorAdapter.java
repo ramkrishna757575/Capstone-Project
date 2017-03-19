@@ -34,6 +34,8 @@ public class RestaurantListCursorAdapter extends RecyclerView.Adapter<Restaurant
     private Context mContext;
     private Cursor mCursor;
     private ViewHolder previousSelected;
+    private int selectedItemPosition = -1;
+    boolean isFirstTime = true;
 
     public RestaurantListCursorAdapter(Context context) {
         mContext = context;
@@ -48,7 +50,7 @@ public class RestaurantListCursorAdapter extends RecyclerView.Adapter<Restaurant
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-        if(position == 0) {
+        if((position == 0 && selectedItemPosition == -1) || (position == selectedItemPosition && selectedItemPosition > -1)) {
             setSelected(viewHolder);
         }
         final Restaurant restaurant = createRestaurantObj(position);
@@ -179,9 +181,22 @@ public class RestaurantListCursorAdapter extends RecyclerView.Adapter<Restaurant
     private void setSelected(ViewHolder viewHolder) {
         if(!CommonUtils.getBooleanFromSharedPreference(mContext, SharedPref.TWO_PANE_MODE))
             return;
+        if(isFirstTime) {
+            updateRestaurantDetail(createRestaurantObj(viewHolder.getAdapterPosition()));
+            isFirstTime = false;
+        }
         if(previousSelected != null)
             previousSelected.backgroundHighlighter.setBackgroundColor(Color.WHITE);
         viewHolder.backgroundHighlighter.setBackgroundColor(mContext.getResources().getColor(R.color.colorSelection));
         previousSelected = viewHolder;
+        selectedItemPosition = viewHolder.getAdapterPosition();
+    }
+    
+    public int getSelectedItemPosition() {
+        return selectedItemPosition;
+    }
+    
+    public void setSelectedItemPosition(int selectedItemPosition) {
+        this.selectedItemPosition = selectedItemPosition;
     }
 }

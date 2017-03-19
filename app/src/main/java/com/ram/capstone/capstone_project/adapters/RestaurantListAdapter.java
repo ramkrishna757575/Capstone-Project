@@ -33,6 +33,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     private List<RestaurantContainer> restaurantContainers;
     private Context mContext;
     private ViewHolder previousSelected;
+    private int selectedItemPosition = -1;
+    boolean isFirstTime = true;
 
     public RestaurantListAdapter(Context context) {
         mContext = context;
@@ -48,10 +50,10 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-        if(position == 0) {
+        final Restaurant restaurant = restaurantContainers.get(position).getRestaurant();
+        if((position == 0 && selectedItemPosition == -1) || (position == selectedItemPosition && selectedItemPosition > -1)) {
             setSelected(viewHolder);
         }
-        final Restaurant restaurant = restaurantContainers.get(position).getRestaurant();
         viewHolder.ratingText.setText(Float.toString(restaurant.getUserRating().getAggregateRating()));
         viewHolder.restaurantNameText.setText(restaurant.getName());
         viewHolder.localityVerboseText.setText(restaurant.getLocation().getLocalityVerbose());
@@ -89,7 +91,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
      */
     public void addAll(List<RestaurantContainer> moreRestaurantContainers) {
         if (restaurantContainers != null) {
-            if(restaurantContainers.size() <= 0 && CommonUtils.getBooleanFromSharedPreference(mContext, SharedPref.TWO_PANE_MODE))
+            if(restaurantContainers.size() <= 0 && CommonUtils.getBooleanFromSharedPreference(mContext, SharedPref.TWO_PANE_MODE) && moreRestaurantContainers.size() > 0)
                 updateRestaurantDetail(moreRestaurantContainers.get(0).getRestaurant());
             restaurantContainers.addAll(moreRestaurantContainers);
             notifyDataSetChanged();
@@ -164,9 +166,22 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
     private void setSelected(ViewHolder viewHolder) {
         if(!CommonUtils.getBooleanFromSharedPreference(mContext, SharedPref.TWO_PANE_MODE))
             return;
+        if(isFirstTime) {
+            updateRestaurantDetail(restaurantContainers.get(viewHolder.getAdapterPosition()).getRestaurant());
+            isFirstTime = false;
+        }
         if(previousSelected != null)
             previousSelected.backgroundHighlighter.setBackgroundColor(Color.WHITE);
         viewHolder.backgroundHighlighter.setBackgroundColor(mContext.getResources().getColor(R.color.colorSelection));
         previousSelected = viewHolder;
+        selectedItemPosition = viewHolder.getAdapterPosition();
+    }
+    
+    public int getSelectedItemPosition() {
+        return selectedItemPosition;
+    }
+    
+    public void setSelectedItemPosition(int selectedItemPosition) {
+        this.selectedItemPosition = selectedItemPosition;
     }
 }
