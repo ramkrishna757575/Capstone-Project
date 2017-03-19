@@ -20,6 +20,7 @@ public class RestaurantProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private RestaurantDbHelper restaurantDbHelper;
 
+    //possible match codes for Uris
     public static final int RESTAURANTS = 100;
     public static final int RESTAURANTS_WITH_ID = 101;
     public static final int LOCATIONS = 201;

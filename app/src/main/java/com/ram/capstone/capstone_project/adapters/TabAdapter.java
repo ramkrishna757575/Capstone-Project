@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by ramkrishna on 27/2/17.
+ * Adapter to setup tabs and fragments in tablayout
  */
 
 public class TabAdapter extends FragmentPagerAdapter {

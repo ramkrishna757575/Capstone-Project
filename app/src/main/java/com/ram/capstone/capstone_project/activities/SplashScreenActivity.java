@@ -22,6 +22,10 @@ import com.ram.capstone.capstone_project.misc.AppConstants;
 import com.ram.capstone.capstone_project.misc.SharedPref;
 import com.ram.capstone.capstone_project.utils.CommonUtils;
 
+/**
+ * SplashScreenActivity - shows when the app is opened.
+ * Finds the location of the device and saves it in SharedPreference
+ */
 public class SplashScreenActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     GoogleApiClient googleApiClient;

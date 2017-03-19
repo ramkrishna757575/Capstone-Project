@@ -20,6 +20,9 @@ import com.ram.capstone.capstone_project.utils.CommonUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * RestaurantListActivity - shows the list of restaurants
+ */
 public class RestaurantListActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
@@ -39,14 +42,20 @@ public class RestaurantListActivity extends AppCompatActivity {
         setupTabs();
         setupListeners();
     }
-
+    
+    /***
+     * Check if this is tablet layout or not and set @twoPaneMode accordingly
+     */
     private void checkAndSetTwoPaneLayout() {
         if(findViewById(R.id.two_pane_layout) != null) {
             CommonUtils.getSharedPreferenceEditor(this).putBoolean(SharedPref.TWO_PANE_MODE, true).apply();
             twoPaneMode = true;
         }
     }
-
+    
+    /**
+     * Find views and check @twoPaneMode and setup fragment accordingly
+     */
     private void init(){
         if(!twoPaneMode) {
             nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
@@ -63,7 +72,10 @@ public class RestaurantListActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
     }
-
+    
+    /**
+     * Add tabs and fragments
+     */
     private void setupTabs() {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new RestaurantListFragment(), getString(R.string.tab_title_nearby));
@@ -76,7 +88,10 @@ public class RestaurantListActivity extends AppCompatActivity {
             }
         });
     }
-
+    
+    /**
+     * Setup listener for tab change and notify corresponding fragments and their adapters
+     */
     private void setupListeners() {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -99,12 +114,20 @@ public class RestaurantListActivity extends AppCompatActivity {
             }
         });
     }
-
+    
+    /**
+     * Add listeners for tab change event
+     * @param listener
+     */
     public void setOnTabChangeListener(INotifyTabChange listener) {
         if(listeners != null)
             listeners.add(listener);
     }
-
+    
+    /**
+     * Remove listeners for tab change event
+     * @param listener
+     */
     public void removeOnTabChangeListener(INotifyTabChange listener) {
         if(listener != null)
             listeners.remove(listeners.indexOf(listener));

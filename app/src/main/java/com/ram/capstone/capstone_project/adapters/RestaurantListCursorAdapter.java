@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 /**
  * Created by ramkrishna on 12/3/17.
+ * Adapter to show the list of Bookmarked restaurants
  */
 
 public class RestaurantListCursorAdapter extends RecyclerView.Adapter<RestaurantListCursorAdapter.ViewHolder> implements INotifyTabChange{
@@ -82,7 +83,12 @@ public class RestaurantListCursorAdapter extends RecyclerView.Adapter<Restaurant
         mCursor = newCursor;
         notifyDataSetChanged();
     }
-
+    
+    /**
+     * if twoPaneMode and tab changed, then update @{@link com.ram.capstone.capstone_project.fragments.RestaurantDetailFragment}
+     * with corresponding selected restaurant from the new tab selected
+     * @param tabIndex
+     */
     @Override
     public void tabChanged(int tabIndex) {
         if(tabIndex != AppConstants.BOOKMARKED_RESTAURANT_LIST_TAB_INDEX)
@@ -165,7 +171,11 @@ public class RestaurantListCursorAdapter extends RecyclerView.Adapter<Restaurant
         restaurant.setUserRating(userRating);
         return restaurant;
     }
-
+    
+    /**
+     * if twoPaneMode, then change the background of the item that is selected
+     * @param viewHolder
+     */
     private void setSelected(ViewHolder viewHolder) {
         if(!CommonUtils.getBooleanFromSharedPreference(mContext, SharedPref.TWO_PANE_MODE))
             return;

@@ -11,6 +11,9 @@ import com.ram.capstone.capstone_project.fragments.RestaurantDetailFragment;
 import com.ram.capstone.capstone_project.misc.AppConstants;
 import com.ram.capstone.capstone_project.models.Restaurant;
 
+/***
+ * RestaurantDetailActivity - shows the details of a restaurant
+ */
 public class RestaurantDetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
@@ -25,10 +28,12 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             return;
         }
 
+        //Setup tool bar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Add the RestaurantDetailFragment to this activity.
         FragmentManager fragmentManager = getSupportFragmentManager();
         RestaurantDetailFragment restaurantDetailFragment;
         restaurantDetailFragment = (RestaurantDetailFragment) fragmentManager.findFragmentByTag(AppConstants.RESTAURANT_DETAIL_FRAGMENT_TAG);
