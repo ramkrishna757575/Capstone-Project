@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="4dp"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/restaurantThumb"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/desc_restaurant_thumb"
+        android:src="@drawable/default_restaurant_thumb" />
+
+    <LinearLayout
+        android:id="@+id/restaurantInfoContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@id/restaurantThumb"
+        android:layout_toRightOf="@id/restaurantThumb"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/restaurantName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLength="50"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Restaurant" />
+
+        <TextView
+            android:id="@+id/restaurantLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLength="50"
+            android:textSize="14sp"
+            tools:text="Bangalore" />
+
+        <TextView
+            android:id="@+id/restaurantCuisines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLength="50"
+            tools:text="Bangalore" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/colorAccent"
+        android:padding="4dp"
+        android:textColor="@android:color/white"
+        tools:text="3.7" />
+
+</RelativeLayout>

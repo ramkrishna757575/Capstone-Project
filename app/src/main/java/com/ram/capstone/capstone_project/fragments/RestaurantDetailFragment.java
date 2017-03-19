@@ -22,6 +22,7 @@ import com.ram.capstone.capstone_project.misc.SharedPref;
 import com.ram.capstone.capstone_project.models.Restaurant;
 import com.ram.capstone.capstone_project.utils.CommonUtils;
 import com.ram.capstone.capstone_project.utils.DatabaseUtils;
+import com.ram.capstone.capstone_project.widget.RestaurantWidget;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -139,6 +140,7 @@ public class RestaurantDetailFragment extends Fragment {
                     DatabaseUtils.insertRestaurantInDb(getContext(), restaurant);
                     btnBookmark.setText(getString(R.string.bookmarked));
                 }
+                RestaurantWidget.sendRefreshBroadcast(getContext());
             }
         });
     }

@@ -38,8 +38,6 @@ public class SplashScreenActivity extends AppCompatActivity implements GoogleApi
         if(CommonUtils.getStringFromSharedPreference(this, SharedPref.FIRST_LAUNCH).isEmpty()) {
             CommonUtils.getSharedPreferenceEditor(this).putString(SharedPref.FIRST_LAUNCH, "Yes").apply();
         }
-        getLocationService();
-        saveLocationInSharedPrefs();
 
         errorMessage = (TextView) findViewById(R.id.errorMessage);
         btnRetry = (Button) findViewById(R.id.retryButton);
@@ -74,6 +72,9 @@ public class SplashScreenActivity extends AppCompatActivity implements GoogleApi
                 }
             }
         }, SPLASH_TIME_OUT);
+
+        getLocationService();
+        saveLocationInSharedPrefs();
     }
 
     @Override

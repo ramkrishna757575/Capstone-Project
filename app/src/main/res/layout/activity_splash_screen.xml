@@ -63,6 +63,7 @@
         android:paddingRight="24dp"
         android:paddingTop="12dp"
         android:text="@string/try_again"
+        android:contentDescription="@string/try_again"
         android:textColor="@color/button_text"
         android:textSize="14sp"
         android:textStyle="normal"

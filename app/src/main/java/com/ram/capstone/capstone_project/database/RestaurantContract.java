@@ -99,36 +99,36 @@ public class RestaurantContract {
     public static final class RestaurantDetails {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_RESTAURANT).appendPath("details").build();
-        public static final String COLUMN_R_ID = "r.id";
-        public static final String COLUMN_R_NAME = "r.name";
-        public static final String COLUMN_R_URL = "r.url";
-        public static final String COLUMN_R_PRICE_RANGE = "r.price_range";
-        public static final String COLUMN_R_CURRENCY = "r.currency";
-        public static final String COLUMN_R_THUMB = "r.thumb";
-        public static final String COLUMN_R_FEATURED_IMAGE = "r.featured_image";
-        public static final String COLUMN_R_PHOTOS_URL = "r.photos_url";
-        public static final String COLUMN_R_MENU_URL = "r.menu_url";
-        public static final String COLUMN_R_EVENTS_URL = "r.events_url";
-        public static final String COLUMN_R_DELIVERING_NOW = "r.is_delivering_now";
-        public static final String COLUMN_R_CUISINES = "r.cuisines";
-        public static final String COLUMN_R_AVG_COST = "r.average_cost_for_two";
-        public static final String COLUMN_R_ONLINE_DELIVERY = "r.has_online_delivery";
-        public static final String COLUMN_R_TABLE_BOOKING = "r.has_table_booking";
-        public static final String COLUMN_R_DEEPLINK = "r.deeplink";
+        public static final String COLUMN_R_ID = "id";
+        public static final String COLUMN_R_NAME = "name";
+        public static final String COLUMN_R_URL = "url";
+        public static final String COLUMN_R_PRICE_RANGE = "price_range";
+        public static final String COLUMN_R_CURRENCY = "currency";
+        public static final String COLUMN_R_THUMB = "thumb";
+        public static final String COLUMN_R_FEATURED_IMAGE = "featured_image";
+        public static final String COLUMN_R_PHOTOS_URL = "photos_url";
+        public static final String COLUMN_R_MENU_URL = "menu_url";
+        public static final String COLUMN_R_EVENTS_URL = "events_url";
+        public static final String COLUMN_R_DELIVERING_NOW = "is_delivering_now";
+        public static final String COLUMN_R_CUISINES = "cuisines";
+        public static final String COLUMN_R_AVG_COST = "average_cost_for_two";
+        public static final String COLUMN_R_ONLINE_DELIVERY = "has_online_delivery";
+        public static final String COLUMN_R_TABLE_BOOKING = "has_table_booking";
+        public static final String COLUMN_R_DEEPLINK = "deeplink";
 
-        public static final String COLUMN_L_RESTAURANT_ID = "l.restaurant_id";
-        public static final String COLUMN_L_ADDRESS = "l.address";
-        public static final String COLUMN_L_LOCALITY = "l.locality";
-        public static final String COLUMN_L_CITY = "l.city";
-        public static final String COLUMN_L_LATITUDE = "l.latitude";
-        public static final String COLUMN_L_LONGITUDE = "l.longitude";
-        public static final String COLUMN_L_ZIP_CODE = "l.zipcode";
-        public static final String COLUMN_L_COUNTRY_ID = "l.country_id";
-        public static final String COLUMN_L_LOCALITY_VERBOSE = "l.locality_verbose";
+        public static final String COLUMN_L_RESTAURANT_ID = "restaurant_id";
+        public static final String COLUMN_L_ADDRESS = "address";
+        public static final String COLUMN_L_LOCALITY = "locality";
+        public static final String COLUMN_L_CITY = "city";
+        public static final String COLUMN_L_LATITUDE = "latitude";
+        public static final String COLUMN_L_LONGITUDE = "longitude";
+        public static final String COLUMN_L_ZIP_CODE = "zipcode";
+        public static final String COLUMN_L_COUNTRY_ID = "country_id";
+        public static final String COLUMN_L_LOCALITY_VERBOSE = "locality_verbose";
 
-        public static final String COLUMN_UR_RESTAURANT_ID = "ur.restaurant_id";
-        public static final String COLUMN_UR_AGGREGATE_RATING = "ur.aggregate_rating";
-        public static final String COLUMN_UR_RATING_TEXT = "ur.rating_text";
-        public static final String COLUMN_UR_VOTES = "ur.votes";
+        public static final String COLUMN_UR_RESTAURANT_ID = "restaurant_id";
+        public static final String COLUMN_UR_AGGREGATE_RATING = "aggregate_rating";
+        public static final String COLUMN_UR_RATING_TEXT = "rating_text";
+        public static final String COLUMN_UR_VOTES = "votes";
     }
 }

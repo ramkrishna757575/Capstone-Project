@@ -2,6 +2,8 @@ package com.ram.capstone.capstone_project.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 
 import com.ram.capstone.capstone_project.R;
 import com.ram.capstone.capstone_project.misc.SharedPref;
+import com.ram.capstone.capstone_project.widget.RestaurantWidget;
 
 /**
  * Created by ramkrishna on 26/2/17.
@@ -121,5 +124,16 @@ public class CommonUtils {
     public static void showKeyboard(Context context, EditText editText) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public static void updateWidget(Context context) {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        if (appWidgetManager != null) {
+            ComponentName name = new ComponentName(context, RestaurantWidget.class);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(name);
+            if(appWidgetIds.length > 0)
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widgetRestaurantList);
+
+        }
     }
 }
