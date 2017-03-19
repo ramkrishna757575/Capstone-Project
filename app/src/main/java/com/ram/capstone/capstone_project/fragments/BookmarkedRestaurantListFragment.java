@@ -30,7 +30,10 @@ import com.ram.capstone.capstone_project.utils.CommonUtils;
  * A simple {@link Fragment} subclass.
  */
 public class BookmarkedRestaurantListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
-
+    
+    private static final String LIST_POSITION = "LIST_POSITION";
+    private int selectedItemPosition = -1;
+    private boolean isFirstTime = true;
     private View rootView;
     private Button btnRetry;
     private RecyclerView restaurantsGrid;
@@ -54,6 +57,8 @@ public class BookmarkedRestaurantListFragment extends Fragment implements Loader
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
+        if(savedInstanceState != null)
+            selectedItemPosition = savedInstanceState.getInt(LIST_POSITION);
         init();
         setupInitialStateOfViews();
         getActivity().getSupportLoaderManager().initLoader(LOADER_ID, null, this);
@@ -68,6 +73,7 @@ public class BookmarkedRestaurantListFragment extends Fragment implements Loader
         somethingWentWrong.setText(getResources().getString(R.string.nothing_to_show));
         searchView = rootView.findViewById(R.id.search_view);
         restaurantListCursorAdapter = new RestaurantListCursorAdapter(getContext());
+        restaurantListCursorAdapter.setSelectedItemPosition(selectedItemPosition);
         gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         restaurantsGrid.setHasFixedSize(true);
         restaurantsGrid.setLayoutManager(gridLayoutManager);
@@ -107,6 +113,9 @@ public class BookmarkedRestaurantListFragment extends Fragment implements Loader
             CommonUtils.hideViews(somethingWentWrong);
         }
         restaurantListCursorAdapter.swapCursor(data);
+        if(isFirstTime) {
+            gridLayoutManager.scrollToPositionWithOffset(selectedItemPosition, 0);
+        }
     }
 
     @Override
@@ -127,4 +136,11 @@ public class BookmarkedRestaurantListFragment extends Fragment implements Loader
             ((RestaurantListActivity) getContext()).removeOnTabChangeListener(restaurantListCursorAdapter);
         super.onPause();
     }
+    
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(LIST_POSITION, restaurantListCursorAdapter.getSelectedItemPosition());
+    }
+    
 }

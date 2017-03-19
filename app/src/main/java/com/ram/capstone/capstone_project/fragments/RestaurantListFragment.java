@@ -40,7 +40,10 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class RestaurantListFragment extends Fragment {
-
+    
+    private static final String LIST_POSITION = "LIST_POSITION";
+    private int selectedItemPosition = -1;
+    private boolean isFirstTime = true;
     private int totalResultsFound = 0;
     private int resultsShownCount = 0;
     private int searchStartPosition = 0;
@@ -70,6 +73,8 @@ public class RestaurantListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
+        if(savedInstanceState != null)
+            selectedItemPosition = savedInstanceState.getInt(LIST_POSITION);
         init();
         setupInitialStateOfViews();
         setupListeners();
@@ -85,6 +90,7 @@ public class RestaurantListFragment extends Fragment {
         loadingIndicator = (ProgressBar) rootView.findViewById(R.id.loadingIndicator);
         somethingWentWrong = (TextView) rootView.findViewById(R.id.somethingWentWrong);
         restaurantListAdapter = new RestaurantListAdapter(getContext());
+        restaurantListAdapter.setSelectedItemPosition(selectedItemPosition);
         gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         restaurantsGrid.setHasFixedSize(true);
         restaurantsGrid.setLayoutManager(gridLayoutManager);
@@ -164,7 +170,7 @@ public class RestaurantListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 searchText.setText("");
-                clearSearchText.setVisibility(View.INVISIBLE);
+                resetSearchAndFetch(View.INVISIBLE);
             }
         });
     }
@@ -201,6 +207,14 @@ public class RestaurantListFragment extends Fragment {
                     searchStartPosition += resultsShownCount;
                     CommonUtils.hideViews(loadingIndicator);
                     restaurantListAdapter.addAll(response.body().getRestaurantsContainer());
+                    if(isFirstTime) {
+                        if (selectedItemPosition >= searchStartPosition) {
+                            gridLayoutManager.scrollToPositionWithOffset(searchStartPosition - 1, 0);
+                        } else if (selectedItemPosition < searchStartPosition) {
+                            gridLayoutManager.scrollToPositionWithOffset(selectedItemPosition, 0);
+                            isFirstTime = false;
+                        }
+                    }
                     if (restaurantListAdapter.getItemCount() <= 0) {
                         somethingWentWrong.setText(getResources().getString(R.string.nothing_to_show));
                         CommonUtils.showViews(somethingWentWrong);
@@ -237,7 +251,13 @@ public class RestaurantListFragment extends Fragment {
             ((RestaurantListActivity) getContext()).removeOnTabChangeListener(restaurantListAdapter);
         super.onPause();
     }
-
+    
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(LIST_POSITION, restaurantListAdapter.getSelectedItemPosition());
+    }
+    
     private void resetSearchAndFetch(int clearSearchTextButtonVisibility) {
         if (isFetching && call != null)
             call.cancel();
